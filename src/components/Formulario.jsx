@@ -8,30 +8,36 @@ const Formulario = () => {
     const [dni, setDni] = useState("");
     const [email, setEmail] = useState("");
     const [datos, setDatos] = useState(datosLS);
-
+    
     useEffect(() => {
         localStorage.setItem('listaDatos', JSON.stringify(datos));
     }, [datos])
 
     const handleSubmit = (e) => {       
         e.preventDefault();
-        let ObjetoDatos = {
-            nombre: nombre,
-            apellido: apellido,
-            dni: dni,
-            email: email
+        if(nombre == "" || apellido == "" || dni == "" || email == ""){
+            alert("Completar todos los datos");
+        } else{
+            alert("Datos enviados");
+            let ObjetoDatos = {
+                nombre: nombre,
+                apellido: apellido,
+                dni: dni,
+                email: email
+            }
+            setDatos([...datos, ObjetoDatos])
+            setNombre("");
+            setApellido("");
+            setDni("");
+            setEmail("");
         }
-        setDatos([...datos, ObjetoDatos])
-        setNombre("");
-        setApellido("");
-        setDni("");
-        setEmail("");
+        
     }
 
     return (
         <>
             <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="datos">
+                <Form.Group className="mb-3" controlId="formDatos">
                 <Form.Label>Nombre</Form.Label>
                     <Form.Control type="text" placeholder="Ingrese un nombre" onChange={(e) => setNombre(e.target.value)} value={nombre} />
                     <Form.Label>Apellido</Form.Label>
